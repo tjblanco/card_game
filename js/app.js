@@ -4,30 +4,18 @@
 let cards = ['fa-diamond','fa-paper-plane-o','fa-anchor','fa-bolt','fa-cube',
              'fa-anchor', 'fa-leaf', 'fa-bicycle', 'fa-bomb', 'fa-leaf',
              'fa-bomb', 'fa-bolt', 'fa-bicycle', 'fa-paper-plane-o', 'fa-cube','fa-diamond'];
-
+let numMoves = 0;
 /*
   * Display the cards on the page
   *   - shuffle the list of cards using the provided "shuffle" method below
   *   - loop through each card and create its HTML
   *   - add each card's HTML to the page
 */
-const restartBottom = document.querySelector('.restart');
-restartBottom.addEventListener('click',function(e){
-  let cards_shuffled = shuffle(cards);
-  let deck = document.querySelector('.deck');
-  deck.innerHTML = '';
-  for(let i = 1; i <= cards_shuffled.length; i++){
-    let item = document.createElement("li");
-    item.classList.add('card')
-    let card = document.createElement('i')
-    card.classList.add('fa');
-    card.classList.add(cards_shuffled[i]);
-    item.appendChild(card);
-    deck.appendChild(item);
-    }
-    let numMoves = 0;
-    document.querySelector('.moves').textContent = numMoves;
-    e.preventDefault();
+
+
+document.querySelector('.restart').addEventListener('click',function(e){
+  restart();
+  e.preventDefault();
 });
 
 
@@ -46,9 +34,29 @@ function shuffle(array) {
     return array;
 }
 
+function restart(){
+  let cards_shuffled = shuffle(cards);
+  let deck = document.querySelector('.deck');
+  deck.innerHTML = '';
+  for(let i = 1; i <= cards_shuffled.length; i++){
+    let item = document.createElement("li");
+    item.classList.add('card')
+    let card = document.createElement('i')
+    card.classList.add('fa');
+    card.classList.add(cards_shuffled[i]);
+    item.appendChild(card);
+    deck.appendChild(item);
+  }
+  numMoves = 0;
+  document.querySelector('.moves').textContent = numMoves;
+  deck.addEventListener('click',function(e){
+    showCard()
+  })
+}
 
-
-
+function showCard(){
+  console.log('Test')
+}
 
 /*
  * set up the event listener for a card. If a card is clicked:
