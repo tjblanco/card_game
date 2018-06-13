@@ -25,6 +25,9 @@ restartBottom.addEventListener('click',function(e){
     item.appendChild(card);
     deck.appendChild(item);
     }
+    let numMoves = 0;
+    document.querySelector('.moves').textContent = numMoves;
+    e.preventDefault();
 });
 
 
@@ -42,6 +45,9 @@ function shuffle(array) {
 
     return array;
 }
+
+
+
 
 
 /*
