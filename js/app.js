@@ -24,20 +24,19 @@ document.querySelector('.restart').addEventListener('click', function(e) {
 
 // Shuffle function from http://stackoverflow.com/a/2450976
 function shuffle(array) {
-    var currentIndex = array.length, temporaryValue, randomIndex;
-    while (currentIndex !== 0) {
-        randomIndex = Math.floor(Math.random() * currentIndex);
-        currentIndex -= 1;
-        temporaryValue = array[currentIndex];
-        array[currentIndex] = array[randomIndex];
-        array[randomIndex] = temporaryValue;
-    }
-    return array;
+  var currentIndex = array.length, temporaryValue, randomIndex;
+  while (currentIndex !== 0) {
+    randomIndex = Math.floor(Math.random() * currentIndex);
+    currentIndex -= 1;
+    temporaryValue = array[currentIndex];
+    array[currentIndex] = array[randomIndex];
+    array[randomIndex] = temporaryValue;
+  }
+  return array;
 }
 
 // Function to restartthe game
 function restart() {
-  console.log('ok');
   let cards_shuffled = shuffle(cards);
   let deck = document.querySelector('.deck');
   deck.innerHTML = '';
@@ -64,14 +63,14 @@ function restart() {
 function endOfGame() {
   setTimeout(function() {
     document.getElementById('end').classList.remove('hidden')
-    // document.getElementById('circle-loader').toggleClass('load-complete');
-    // document.getElementById('checkmark').toggle();
     document.getElementById('score').textContent = 'With ' + numMoves + ' moves and ' + stars + ' stars.'
-  });
+    $('.circle-loader').toggleClass('load-complete');
+    $('.checkmark').toggle();
+  },1000);
 }
 
 // Function to lock paired cards
-function lockCards(callback) {
+function lockCards() {
   for (let item of document.getElementsByClassName(openCards[0])) {
     item.parentNode.classList.remove('show');
     item.parentNode.classList.remove('open');
@@ -93,7 +92,7 @@ function hideCard(openCards) {
         item.parentNode.classList.remove('open');
       }
     }
-  }.bind(this), 800);
+  }.bind(this),1200);
 }
 
 // Function to increment movement counter
@@ -150,7 +149,8 @@ document.querySelector('.deck').addEventListener('click',function(e) {
   }
 });
 
+// Restart when click on play again button
 document.querySelector('#restartButton').addEventListener('click', restart );
 
-
+// Shuffle cards when load
 document.addEventListener( "DOMContentLoaded", restart() );

@@ -1,36 +1,36 @@
 html {
-    box-sizing: border-box;
+  box-sizing: border-box;
 }
 
 *,
 *::before,
 *::after {
-    box-sizing: inherit;
+  box-sizing: inherit;
 }
 
 html,
 body {
-    width: 100%;
-    height: 100%;
-    margin: 0;
-    padding: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
 }
 
 body {
-    background: #ffffff url('../img/geometry2.png'); /* Background pattern from Subtle Patterns */
-    font-family: 'Coda', cursive;
+  background: #ffffff url('../img/geometry2.png'); /* Background pattern from Subtle Patterns */
+  font-family: 'Coda', cursive;
 }
 
 .container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
 }
 
 h1 {
-    font-family: 'Open Sans', sans-serif;
-    font-weight: 300;
+  font-family: 'Open Sans', sans-serif;
+  font-weight: 300;
 }
 
 .display {
@@ -77,47 +77,51 @@ button:hover {
  */
 
 .deck {
-    width: 660px;
-    min-height: 680px;
-    background: linear-gradient(160deg, #02ccba 0%, #aa7ecd 100%);
-    padding: 32px;
-    border-radius: 10px;
-    box-shadow: 12px 15px 20px 0 rgba(46, 61, 73, 0.5);
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    align-items: center;
-    margin: 0 0 3em;
+  width: 660px;
+  min-height: 680px;
+  background: linear-gradient(160deg, #02ccba 0%, #aa7ecd 100%);
+  padding: 32px;
+  border-radius: 10px;
+  box-shadow: 12px 15px 20px 0 rgba(46, 61, 73, 0.5);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0 0 3em;
 }
 
 .deck .card {
-    height: 125px;
-    width: 125px;
-    background: #2e3d49;
-    font-size: 0;
-    color: #ffffff;
-    border-radius: 8px;
-    cursor: pointer;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    box-shadow: 5px 2px 20px 0 rgba(46, 61, 73, 0.5);
+  height: 125px;
+  width: 125px;
+  background: #2e3d49;
+  font-size: 0;
+  color: #ffffff;
+  border-radius: 8px;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 5px 2px 20px 0 rgba(46, 61, 73, 0.5);
 }
 
 .deck .card.open {
-    transform: rotateY(0);
-    background: #02b3e4;
-    cursor: default;
+  transform: rotateY(180deg);
+  background: #02b3e4;
+  cursor: default;
+  transition: transform 1s;
+  transform-style: preserve-3d;
 }
 
 .deck .card.show {
-    font-size: 33px;
+  font-size: 33px;
 }
 
 .deck .card.match {
-    cursor: default;
-    background: #02ccba;
-    font-size: 33px;
+  transform: rotateY(180deg);
+  transition: transform 0s;
+  cursor: default;
+  background: #02ccba;
+  font-size: 33px;
 }
 
 /*
@@ -131,113 +135,101 @@ button:hover {
 
 
 .score-panel {
-    text-align: left;
-    width: 345px;
-    margin-bottom: 10px;
+  text-align: left;
+  width: 345px;
+  margin-bottom: 10px;
 }
 
 .score-panel .stars {
-    margin: 0;
-    padding: 0;
-    display: inline-block;
-    margin: 0 5px 0 0;
+  margin: 0;
+  padding: 0;
+  display: inline-block;
+  margin: 0 5px 0 0;
 }
 
 .score-panel .stars li {
-    list-style: none;
-    display: inline-block;
+  list-style: none;
+  display: inline-block;
 }
 
 .score-panel .restart {
-    float: right;
-    cursor: pointer;
+  float: right;
+  cursor: pointer;
 }
 
 
 
  /*
-  Completed tick
+  Green tick
  */
- $brand-success: #5cb85c;
- $loader-size: 30px;
- $check-height: $loader-size/2;
- $check-width: $check-height/2;
- $check-left: ($loader-size/6 + $loader-size/12);
- $check-thickness: 3px;
- $check-color: $brand-success;
+.circle-loader {
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  border-left-color: #5cb85c;
+  animation: loader-spin 1.2s infinite linear;
+  position: relative;
+  display: inline-block;
+  vertical-align: top;
+  border-radius: 50%;
+  width: 7em;
+  height: 7em;
+}
 
- .circle-loader {
-   margin-bottom: $loader-size/2;
-   border: 1px solid rgba(0, 0, 0, 0.2);
-   border-left-color: $check-color;
-   animation: loader-spin 1.2s infinite linear;
-   position: relative;
-   display: inline-block;
-   vertical-align: top;
-   border-radius: 50%;
-   width: $loader-size;
-   height: $loader-size;
- }
+.load-complete {
+  -webkit-animation: none;
+  animation: none;
+  border-color: #5cb85c;
+  transition: border 500ms ease-out;
+}
 
- .load-complete {
-   -webkit-animation: none;
-   animation: none;
-   border-color: $check-color;
-   transition: border 500ms ease-out;
- }
+.checkmark {
+  display: none;
+}
+.checkmark.draw:after {
+  animation-duration: 800ms;
+  animation-timing-function: ease;
+  animation-name: checkmark;
+  transform: scaleX(-1) rotate(135deg);
+}
+.checkmark:after {
+  opacity: 1;
+  height: 3.5em;
+  width: 1.75em;
+  transform-origin: left top;
+  border-right: 3px solid #5cb85c;
+  border-top: 3px solid #5cb85c;
+  content: '';
+  left: 1.75em;
+  top: 3.5em;
+  position: absolute;
+}
 
- .checkmark {
-   display: none;
-
-   &.draw:after {
-     animation-duration: 800ms;
-     animation-timing-function: ease;
-     animation-name: checkmark;
-     transform: scaleX(-1) rotate(135deg);
-   }
-
-   &:after {
-     opacity: 1;
-     height: $check-height;
-     width: $check-width;
-     transform-origin: left top;
-     border-right: $check-thickness solid $check-color;
-     border-top: $check-thickness solid $check-color;
-     content: '';
-     left: $check-left;
-     top: $check-height;
-     position: absolute;
-   }
- }
-
- @keyframes loader-spin {
-   0% {
-     transform: rotate(0deg);
-   }
-   100% {
-     transform: rotate(360deg);
-   }
- }
-
- @keyframes checkmark {
-   0% {
-     height: 0;
-     width: 0;
-     opacity: 1;
-   }
-   20% {
-     height: 0;
-     width: $check-width;
-     opacity: 1;
-   }
-   40% {
-     height: $check-height;
-     width: $check-width;
-     opacity: 1;
-   }
-   100% {
-     height: $check-height;
-     width: $check-width;
-     opacity: 1;
-   }
- }
+@keyframes loader-spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+@keyframes checkmark {
+  0% {
+    height: 0;
+    width: 0;
+    opacity: 1;
+  }
+  20% {
+    height: 0;
+    width: 1.75em;
+    opacity: 1;
+  }
+  40% {
+    height: 3.5em;
+    width: 1.75em;
+    opacity: 1;
+  }
+  100% {
+    height: 3.5em;
+    width: 1.75em;
+    opacity: 1;
+  }
+}
