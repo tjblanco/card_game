@@ -6,6 +6,7 @@ let cards = ['fa-diamond','fa-paper-plane-o','fa-anchor','fa-bolt','fa-cube',
              'fa-bomb', 'fa-bolt',   'fa-bicycle', 'fa-paper-plane-o', 'fa-cube','fa-diamond'];
 let numMoves = 0;
 let openCards = [];
+let matches = 0;
 /*
   * Display the cards on the page
   *   - shuffle the list of cards using the provided "shuffle" method below
@@ -50,15 +51,26 @@ function restart() {
   }
   numMoves = 0;
   openCards = [];
+  matches = 0;
   document.querySelector('.moves').textContent = numMoves;
 }
 
-function lockCards() {
+function endOfGame() {
+  setTimeout(function() {
+    if (matches === 8) {
+      alert('FIN!!!')
+    }
+  })
+}
+
+function lockCards(callback) {
   for (let item of document.getElementsByClassName(openCards[0])) {
     item.parentNode.classList.remove('show');
     item.parentNode.classList.remove('open');
     item.parentNode.classList.toggle('match');
   }
+  matches += 1;
+  endOfGame()
 }
 
 function hideCard(openCards) {
@@ -69,7 +81,7 @@ function hideCard(openCards) {
         item.parentNode.classList.remove('open');
       }
     }
-  }.bind(this), 1000);
+  }.bind(this), 800);
 }
 
 function incrementMove() {
@@ -107,7 +119,7 @@ document.querySelector('.deck').addEventListener('click',function(e) {
   }
 });
 
-
+document.addEventListener("DOMContentLoaded", restart());
 /*
  * set up the event listener for a card. If a card is clicked:
  *  - DONE display the card's symbol (put this functionality in another function that you call from this one)
