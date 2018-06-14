@@ -56,7 +56,12 @@ function restart() {
   document.querySelector('#star3').classList.remove('nostart');
   document.querySelector('#star2').classList.remove('nostart');
   document.querySelector('.moves').textContent = numMoves;
+  document.querySelector('.circle-loader').classList.remove('load-complete');
+  document.querySelector('.checkmark').style.display = 'none';
+  document.querySelector('.checkmark').innerHTML = ''
   document.getElementById('end').classList.add('hidden');
+  // $('.circle-loader').toggleClass('load-complete');
+  // $('.checkmark').toggle();
 }
 
 // Function to end the game
@@ -70,17 +75,20 @@ function endOfGame() {
 }
 
 // Function to lock paired cards
-function lockCards() {
-  for (let item of document.getElementsByClassName(openCards[0])) {
-    item.parentNode.classList.remove('show');
-    item.parentNode.classList.remove('open');
-    item.parentNode.classList.toggle('match');
-  }
-  matches += 1;
-  // Check if the game is over
-  if (matches === 8) {
-    endOfGame()
-  }
+function lockCards(openCard) {
+  setTimeout(function () {
+    for (let item of document.getElementsByClassName(openCard)) {
+      console.log(item)
+      item.parentNode.classList.remove('show');
+      item.parentNode.classList.remove('open');
+      item.parentNode.classList.toggle('match');
+    }
+    matches += 1;
+    // Check if the game is over
+    if (matches === 8) {
+      endOfGame()
+    }
+  }.bind(this),1000);
 }
 
 // Function to hide cards that don't match
@@ -92,7 +100,7 @@ function hideCard(openCards) {
         item.parentNode.classList.remove('open');
       }
     }
-  }.bind(this),1200);
+  }.bind(this),1100);
 }
 
 // Function to increment movement counter
@@ -100,14 +108,14 @@ function incrementMove() {
   numMoves += 1;
   openCards = [];
   // Star managment
-  if (numMoves > 18) {
+  if (numMoves > 12) {
+    stars = 2;
+    document.querySelector('#star3').classList.add('nostart');
+  }
+  if (numMoves > 24 ) {
     stars = 1;
     document.querySelector('#star3').classList.add('nostart');
     document.querySelector('#star2').classList.add('nostart');
-  }
-  if (numMoves > 10) {
-    stars = 2;
-    document.querySelector('#star3').classList.add('nostart');
   }
   // Update number of movements
   document.querySelector('.moves').textContent = numMoves;
