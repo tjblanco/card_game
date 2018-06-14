@@ -37,6 +37,7 @@ function shuffle(array) {
 
 // Function to restartthe game
 function restart() {
+  console.log('ok');
   let cards_shuffled = shuffle(cards);
   let deck = document.querySelector('.deck');
   deck.innerHTML = '';
@@ -56,12 +57,16 @@ function restart() {
   document.querySelector('#star3').classList.remove('nostart');
   document.querySelector('#star2').classList.remove('nostart');
   document.querySelector('.moves').textContent = numMoves;
+  document.getElementById('end').classList.add('hidden');
 }
 
 // Function to end the game
 function endOfGame() {
   setTimeout(function() {
-      alert('FIN!!!');
+    document.getElementById('end').classList.remove('hidden')
+    // document.getElementById('circle-loader').toggleClass('load-complete');
+    // document.getElementById('checkmark').toggle();
+    document.getElementById('score').textContent = 'With ' + numMoves + ' moves and ' + stars + ' stars.'
   });
 }
 
@@ -144,5 +149,8 @@ document.querySelector('.deck').addEventListener('click',function(e) {
     showCard(cardElmt);
   }
 });
+
+document.querySelector('#restartButton').addEventListener('click', restart );
+
 
 document.addEventListener( "DOMContentLoaded", restart() );
