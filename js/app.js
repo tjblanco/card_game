@@ -3,8 +3,9 @@
  */
 let cards = ['fa-diamond','fa-paper-plane-o','fa-anchor','fa-bolt','fa-cube',
              'fa-anchor', 'fa-leaf', 'fa-bicycle', 'fa-bomb', 'fa-leaf',
-             'fa-bomb', 'fa-bolt', 'fa-bicycle', 'fa-paper-plane-o', 'fa-cube','fa-diamond'];
+             'fa-bomb', 'fa-bolt',   'fa-bicycle', 'fa-paper-plane-o', 'fa-cube','fa-diamond'];
 let numMoves = 0;
+let openCards = [];
 /*
   * Display the cards on the page
   *   - shuffle the list of cards using the provided "shuffle" method below
@@ -13,7 +14,7 @@ let numMoves = 0;
 */
 
 
-document.querySelector('.restart').addEventListener('click',function(e){
+document.querySelector('.restart').addEventListener('click',function(e) {
   restart();
   e.preventDefault();
 });
@@ -34,11 +35,11 @@ function shuffle(array) {
     return array;
 }
 
-function restart(){
+function restart() {
   let cards_shuffled = shuffle(cards);
   let deck = document.querySelector('.deck');
   deck.innerHTML = '';
-  for(let i = 1; i <= cards_shuffled.length; i++){
+  for(let i = 0; i < cards_shuffled.length; i++) {
     let item = document.createElement("li");
     item.classList.add('card')
     let card = document.createElement('i')
@@ -48,15 +49,33 @@ function restart(){
     deck.appendChild(item);
   }
   numMoves = 0;
+  openCards = [];
   document.querySelector('.moves').textContent = numMoves;
-  deck.addEventListener('click',function(e){
-    showCard()
-  })
 }
 
-function showCard(){
-  console.log('Test')
+function appendInArray(element) {
+  openCards.push(element);
+  console.log(openCards)
+  // if(element.length === 2) {
+  //   if(element[0] === element[1]){
+  //     return 1
+  //   }
+  // }
 }
+
+function showCard(cardElmt)  {
+  cardElmt.classList.add('open');
+  cardElmt.classList.add('show');
+  appendInArray(cardElmt.children[0].className)
+}
+
+document.querySelector('.deck').addEventListener('click',function(e) {
+  let cardElmt = e.target;
+  if (e.target.nodeName === 'LI' && !cardElmt.classList.contains('match') && !cardElmt.classList.contains('open')){
+    showCard(cardElmt);
+  }
+});
+
 
 /*
  * set up the event listener for a card. If a card is clicked:
