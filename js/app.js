@@ -15,7 +15,9 @@ let numMoves = 0;
 let openCards = [];
 let matches = 0;
 let stars = 3;
-
+let first = true;
+let timerVar = setInterval(countTimer, 1000);
+let totalSeconds = 0;
 // Function to restart the game on click in restart bottom
 document.querySelector('.restart').addEventListener('click', function(e) {
   restart();
@@ -53,6 +55,7 @@ function restart() {
   openCards = [];
   matches = 0;
   stars = 3;
+  first = true;
   document.querySelector('#star3').classList.remove('nostart');
   document.querySelector('#star2').classList.remove('nostart');
   document.querySelector('.moves').textContent = numMoves;
@@ -60,6 +63,9 @@ function restart() {
   document.querySelector('.checkmark').style.display = 'none';
   document.querySelector('.checkmark').innerHTML = ''
   document.getElementById('end').classList.add('hidden');
+  clearInterval(timerVar);
+  totalSeconds = -1;
+  countTimer();
   // $('.circle-loader').toggleClass('load-complete');
   // $('.checkmark').toggle();
 }
@@ -152,6 +158,11 @@ function showCard(cardElmt) {
 // Set up the event listener for a card
 document.querySelector('.deck').addEventListener('click',function(e) {
   let cardElmt = e.target;
+  if(first) {
+    console.log('ok')
+    timerVar = setInterval(countTimer, 1000);
+    first = false;
+  }
   if (e.target.nodeName === 'LI' && !cardElmt.classList.contains('match') && !cardElmt.classList.contains('open')) {
     showCard(cardElmt);
   }
@@ -162,3 +173,12 @@ document.querySelector('#restartButton').addEventListener('click', restart );
 
 // Shuffle cards when load
 document.addEventListener( "DOMContentLoaded", restart() );
+
+function countTimer() {
+    ++totalSeconds;
+    let minute = Math.floor(totalSeconds / 60);
+    let seconds = totalSeconds - (minute * 60);
+
+    document.getElementById("minutes").innerHTML = minute;
+    document.getElementById("seconds").innerHTML = seconds;
+}
