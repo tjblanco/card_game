@@ -7,6 +7,7 @@ let cards = ['fa-diamond','fa-paper-plane-o','fa-anchor','fa-bolt','fa-cube',
 let numMoves = 0;
 let openCards = [];
 let matches = 0;
+let stars = 3;
 /*
   * Display the cards on the page
   *   - shuffle the list of cards using the provided "shuffle" method below
@@ -87,6 +88,15 @@ function hideCard(openCards) {
 function incrementMove() {
   numMoves += 1;
   openCards = [];
+  if(numMoves > 18){
+    stars = 1;
+    document.querySelector('#star3').classList.add('nostart');
+    document.querySelector('#star2').classList.add('nostart');
+  }
+  if (numMoves > 10) {
+    stars = 2;
+    document.querySelector('#star3').classList.add('nostart');
+  }
   document.querySelector('.moves').textContent = numMoves;
 }
 

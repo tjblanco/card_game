@@ -84,6 +84,12 @@ h1 {
 /*
  * Styles for the Score Panel
  */
+.nostart {
+  -webkit-text-fill-color: white;
+  -webkit-text-stroke-width: 1px;
+  -webkit-text-stroke-color: black;
+}
+
 
 .score-panel {
     text-align: left;
