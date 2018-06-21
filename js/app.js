@@ -69,8 +69,6 @@ function restart() {
   clearInterval(timerVar);
   totalSeconds = -1;
   countTimer();
-  // $('.circle-loader').toggleClass('load-complete');
-  // $('.checkmark').toggle();
 }
 
 // Function to end the game
@@ -103,9 +101,8 @@ function lockCards(openCard) {
     }
     matches += 1;
     // Check if the game is over
-    if (matches === 8) {
-      endOfGame()
-    }
+    matches === 8 && endOfGame();
+    document.querySelector('.deck').classList.remove('disable');
   }.bind(this),1000);
 }
 
@@ -118,6 +115,7 @@ function hideCard(openCards) {
         item.parentNode.classList.remove('open');
       }
     }
+    document.querySelector('.deck').classList.remove('disable');
   }.bind(this),1100);
 }
 
@@ -141,20 +139,17 @@ function incrementMove() {
 
 // Function to check if cards match
 function checkMatch() {
-  if (openCards[0] === openCards[1]) {
-    lockCards(openCards[0] );
-  } else {
-    hideCard(openCards)
-  }
+  openCards[0] === openCards[1] ? lockCards(openCards[0]) : hideCard(openCards);
   // Increment movement counter
   incrementMove();
 }
+
 
 // Function to add the card to a *list* of "open" cards
 function appendInArray(element) {
   openCards.push(element);
   if(openCards.length === 2) {
-    // Check if cards match
+    document.querySelector('.deck').classList.add('disable');
     checkMatch();
   }
 }
@@ -164,10 +159,9 @@ function showCard(cardElmt) {
   cardElmt.classList.add('open');
   cardElmt.classList.add('show');
   // Add the card to a *list* of "open" cards
-  appendInArray(cardElmt.children[0].className)
+  appendInArray(cardElmt.children[0].className);
 }
 
-// Set up the event listener for a card
 document.querySelector('.deck').addEventListener('click',function(e) {
   let cardElmt = e.target;
   if(first) {
@@ -179,6 +173,7 @@ document.querySelector('.deck').addEventListener('click',function(e) {
   }
 });
 
+
 // Restart when click on play again button
 document.querySelector('#restartButton').addEventListener('click', restart );
 
@@ -186,10 +181,10 @@ document.querySelector('#restartButton').addEventListener('click', restart );
 document.addEventListener( "DOMContentLoaded", restart() );
 
 function countTimer() {
-    ++totalSeconds;
-    let minute = Math.floor(totalSeconds / 60);
-    let seconds = totalSeconds - (minute * 60);
+  ++totalSeconds;
+  let minute = Math.floor(totalSeconds / 60);
+  let seconds = totalSeconds - (minute * 60);
 
-    document.getElementById("minutes").innerHTML = minute;
-    document.getElementById("seconds").innerHTML = seconds;
+  document.getElementById("minutes").innerHTML = minute;
+  document.getElementById("seconds").innerHTML = seconds;
 }
