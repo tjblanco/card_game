@@ -1,23 +1,26 @@
 /*
  * List that holds all of your cards
  */
-let cards = ['fa-diamond', 'fa-diamond',
-             'fa-paper-plane-o', 'fa-paper-plane-o',
-             'fa-anchor', 'fa-anchor',
-             'fa-bolt', 'fa-bolt',
-             'fa-leaf', 'fa-leaf',
-             'fa-bomb', 'fa-bomb',
-             'fa-bicycle', 'fa-bicycle',
-             'fa-cube', 'fa-cube'];
+let cards = [
+    'fa-diamond',
+    'fa-paper-plane-o',
+    'fa-anchor',
+    'fa-bolt',
+    'fa-leaf',
+    'fa-bomb',
+    'fa-bicycle',
+    'fa-cube'
+];
+cards = [...cards, ...cards];
 
 // Global variables
-let numMoves = 0;
-let openCards = [];
-let matches = 0;
-let stars = 3;
-let first = true;
-let timerVar = setInterval(countTimer, 1000);
-let totalSeconds = 0;
+let numMoves = 0,
+    openCards = [],
+    matches = 0,
+    stars = 3,
+    first = true,
+    timerVar = setInterval(countTimer, 1000),
+    totalSeconds = 0;
 // Function to restart the game on click in restart bottom
 document.querySelector('.restart').addEventListener('click', function(e) {
   restart();
@@ -26,7 +29,7 @@ document.querySelector('.restart').addEventListener('click', function(e) {
 
 // Shuffle function from http://stackoverflow.com/a/2450976
 function shuffle(array) {
-  var currentIndex = array.length, temporaryValue, randomIndex;
+  let currentIndex = array.length, temporaryValue, randomIndex;
   while (currentIndex !== 0) {
     randomIndex = Math.floor(Math.random() * currentIndex);
     currentIndex -= 1;
@@ -37,15 +40,15 @@ function shuffle(array) {
   return array;
 }
 
-// Function to restartthe game
+// Function to restart the game
 function restart() {
   let cards_shuffled = shuffle(cards);
   let deck = document.querySelector('.deck');
   deck.innerHTML = '';
   for(let i = 0; i < cards_shuffled.length; i++) {
     let item = document.createElement("li");
-    item.classList.add('card')
-    let card = document.createElement('i')
+    item.classList.add('card');
+    let card = document.createElement('i');
     card.classList.add('fa');
     card.classList.add(cards_shuffled[i]);
     item.appendChild(card);
@@ -61,7 +64,7 @@ function restart() {
   document.querySelector('.moves').textContent = numMoves;
   document.querySelector('.circle-loader').classList.remove('load-complete');
   document.querySelector('.checkmark').style.display = 'none';
-  document.querySelector('.checkmark').innerHTML = ''
+  document.querySelector('.checkmark').innerHTML = '';
   document.getElementById('end').classList.add('hidden');
   clearInterval(timerVar);
   totalSeconds = -1;
@@ -73,8 +76,18 @@ function restart() {
 // Function to end the game
 function endOfGame() {
   setTimeout(function() {
-    document.getElementById('end').classList.remove('hidden')
-    document.getElementById('score').textContent = 'With ' + numMoves + ' moves and ' + stars + ' stars.'
+    document.getElementById('end').classList.remove('hidden');
+    minutes = document.getElementById("minutes").innerHTML;
+    seconds = document.getElementById("seconds").innerHTML;
+    let text = `With ${numMoves} moves and ${stars} stars in `;
+    if(minutes == 0) {
+      text = text + seconds + ' seconds';
+    }else if (minutes <= 1 > 0) {
+      text = text + `${minutes} minute and ${seconds} seconds`;
+    }else{
+      text = text + `${minutes} minutes and ${seconds} seconds`;
+    }
+    document.getElementById('score').textContent = text ;
     $('.circle-loader').toggleClass('load-complete');
     $('.checkmark').toggle();
   },1000);
@@ -84,7 +97,6 @@ function endOfGame() {
 function lockCards(openCard) {
   setTimeout(function () {
     for (let item of document.getElementsByClassName(openCard)) {
-      console.log(item)
       item.parentNode.classList.remove('show');
       item.parentNode.classList.remove('open');
       item.parentNode.classList.toggle('match');
@@ -159,7 +171,6 @@ function showCard(cardElmt) {
 document.querySelector('.deck').addEventListener('click',function(e) {
   let cardElmt = e.target;
   if(first) {
-    console.log('ok')
     timerVar = setInterval(countTimer, 1000);
     first = false;
   }
